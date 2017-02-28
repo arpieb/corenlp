@@ -20,6 +20,7 @@ defmodule CoreNLP.Mixfile do
         main: "readme",
         extras: [
           "README.md",
+          "LICENSE.md"
         ]
       ]
     ]
