@@ -17,8 +17,18 @@ def deps do
 end
 ```
 
+The following are configuration settings used by this application to point to your CoreNLP server, with their defaults shown:
+
+```elixir
+config :corenlp,
+  host:          "localhost",
+  base_path:     "/",
+  port:          9000,
+  recv_timeout:  30_000
+```
+
 Refer to the [Stanford CoreNLP Server](http://stanfordnlp.github.io/CoreNLP/corenlp-server.html) page for detailed 
-information regarding standing up a dedicated server (even a local instance for dev/testing).
+information regarding standing up a dedicated server (including a local instance for dev/testing).
 
 ## Usage
 
