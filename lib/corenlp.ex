@@ -8,32 +8,38 @@ defmodule CoreNLP do
   require Logger
 
   @doc """
-  Annotate provided text.
-
-  ## Examples
-
-    iex> CoreNLP.annotate("The cat sat.", annotators: "tokenize,ssplit,pos")
-    {:ok,
-     %{"sentences" => [%{"index" => 0,
-          "tokens" => [%{"after" => " ", "before" => "",
-             "characterOffsetBegin" => 0, "characterOffsetEnd" => 3, "index" => 1,
-             "originalText" => "The", "pos" => "DT", "word" => "The"},
-           %{"after" => " ", "before" => " ", "characterOffsetBegin" => 4,
-             "characterOffsetEnd" => 7, "index" => 2, "originalText" => "cat",
-             "pos" => "NN", "word" => "cat"},
-           %{"after" => "", "before" => " ", "characterOffsetBegin" => 8,
-             "characterOffsetEnd" => 11, "index" => 3, "originalText" => "sat",
-             "pos" => "VBD", "word" => "sat"},
-           %{"after" => "", "before" => "", "characterOffsetBegin" => 11,
-             "characterOffsetEnd" => 12, "index" => 4, "originalText" => ".",
-             "pos" => ".", "word" => "."}]}]}}
-
+  Annotate provided text with all available annotators.  Unless you have a server tuned to handle this level of
+  processing, it is strongly recommended to use `CoreNLP.annotate/2` to scope the level of processing applied to the provided
+  text.
   """
   @spec annotate(text :: binary) :: tuple
   def annotate(text) do
     annotate(text, %{})
   end
 
+  @doc """
+  Annotate provided text with specific processing properties set.
+  See the official [Stanford CoreNLP](http://stanfordnlp.github.io/CoreNLP/index.html) documentation for available options.
+
+  ## Examples
+
+      iex> CoreNLP.annotate("The cat sat.", annotators: "tokenize,ssplit,pos")
+      {:ok,
+       %{"sentences" => [%{"index" => 0,
+            "tokens" => [%{"after" => " ", "before" => "",
+               "characterOffsetBegin" => 0, "characterOffsetEnd" => 3, "index" => 1,
+               "originalText" => "The", "pos" => "DT", "word" => "The"},
+             %{"after" => " ", "before" => " ", "characterOffsetBegin" => 4,
+               "characterOffsetEnd" => 7, "index" => 2, "originalText" => "cat",
+               "pos" => "NN", "word" => "cat"},
+             %{"after" => "", "before" => " ", "characterOffsetBegin" => 8,
+               "characterOffsetEnd" => 11, "index" => 3, "originalText" => "sat",
+               "pos" => "VBD", "word" => "sat"},
+             %{"after" => "", "before" => "", "characterOffsetBegin" => 11,
+               "characterOffsetEnd" => 12, "index" => 4, "originalText" => ".",
+               "pos" => ".", "word" => "."}]}]}}
+
+  """
   @spec annotate(text :: binary, properties :: keyword) :: tuple
   def annotate(text, properties) when is_list(properties) do
     annotate(text, keywords_to_map(properties))
