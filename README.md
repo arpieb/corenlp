@@ -1,5 +1,7 @@
 # CoreNLP
 
+[![Hex.pm](https://img.shields.io/hexpm/v/corenlp.svg)](https://hex.pm/packages/corenlp)
+
 The **CoreNLP** package is a thin Elixir client for the [Stanford CoreNLP](http://stanfordnlp.github.io/CoreNLP/index.html) Server.
 
 Since the Stanford offering is written in Java, the recommended integration for non-JVM languages is to stand up a 
