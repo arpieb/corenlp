@@ -8,7 +8,9 @@ defmodule CoreNLP do
   require Logger
 
   @doc """
-  Annotate provided text with all available annotators.  Unless you have a server tuned to handle this level of
+  Annotate provided text with all available annotators.
+
+  Unless you have a server tuned to handle this level of
   processing, it is strongly recommended to use `CoreNLP.annotate/2` to scope the level of processing applied to the provided
   text.
   """
@@ -19,6 +21,7 @@ defmodule CoreNLP do
 
   @doc """
   Annotate provided text with specific processing properties set.
+
   See the official [Stanford CoreNLP](http://stanfordnlp.github.io/CoreNLP/index.html) documentation for available options.
 
   ## Examples
@@ -56,6 +59,34 @@ defmodule CoreNLP do
     endpoint = get_endpoint()
     HTTPoison.post(endpoint, text, [], params: [properties: json_props], recv_timeout: recv_timeout())
     |> process_response(endpoint, properties)
+  end
+
+  @doc """
+  Applies a TokensRegex pattern to the provided text.
+  
+  See the official [Stanford TokensRegex](http://nlp.stanford.edu/software/tokensregex.shtml) documentation for more information.
+
+  ## Examples
+
+      iex> CoreNLP.tokensregex("The quick brown fox jumps over the lazy dog.", ~S/(?$foxtype [{pos:JJ}]+ ) fox/)
+      {:ok,
+       %{"sentences" => [%{"0" => %{"$foxtype" => %{"begin" => 1, "end" => 3,
+                "text" => "quick brown"}, "begin" => 1, "end" => 4,
+              "text" => "quick brown fox"}, "length" => 1}]}}
+
+  """
+  @spec tokensregex(text :: binary, pattern :: binary, filter :: boolean) :: tuple
+  def tokensregex(text, pattern, filter \\ false) do
+    # Based on examination of the baked-in CoreNLP Server test page, we need to do this or else the server will not
+    # correctly process these characters in a pattern.
+    pattern = pattern
+    |> String.replace("&", "\\&")
+    |> String.replace("+", "\\+")
+
+    endpoint = get_endpoint("tokensregex")
+    params = [pattern: pattern, filter: filter]
+    HTTPoison.post(endpoint, text, [], params: params, recv_timeout: recv_timeout())
+    |> process_response(endpoint, params)
   end
 
   # Process a successful request.

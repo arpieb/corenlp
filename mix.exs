@@ -52,7 +52,7 @@ defmodule CoreNLP.Mixfile do
 
   defp description do
     """
-    This package provides a client interface to a Stanford CoreNLP Server.
+    This package provides a client interface to a Stanford CoreNLP Server for natural language processing (NLP) of textual content.
     """
   end
 
@@ -68,7 +68,7 @@ defmodule CoreNLP.Mixfile do
       licenses: ["Apache 2.0"],
       links: %{
         "GitHub" => "https://github.com/arpieb/corenlp",
-        "CoreNLP" => "http://stanfordnlp.github.io/CoreNLP/index.html",
+        "Stanford CoreNLP Project" => "http://stanfordnlp.github.io/CoreNLP/index.html",
       },
     ]
   end
