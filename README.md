@@ -55,6 +55,28 @@ iex> CoreNLP.tokensregex("The quick brown fox jumps over the lazy dog.", ~S/(?$f
         "text" => "quick brown fox"}, "length" => 1}]}}
 ```
 
+### Semgrex
+
+```elixir
+iex> CoreNLP.semgrex("The quick brown fox jumped over the lazy dog.", ~S|{pos:/VB.*/} >nsubj {}=subject >/nmod:.*/ {}=prep_phrase|)
+{:ok,
+ %{"sentences" => [%{"0" => %{"$prep_phrase" => %{"begin" => 8, "end" => 9,
+          "text" => "dog"},
+        "$subject" => %{"begin" => 3, "end" => 4, "text" => "fox"},
+        "begin" => 4, "end" => 5, "text" => "jumped"}, "length" => 1}]}}
+```
+
+### Tregex
+
+```elixir
+iex> CoreNLP.tregex("The quick brown fox jumped over the lazy dog.", ~S|NP < NN=animal|)
+{:ok,
+ %{"sentences" => [%{"0" => %{"match" => "(NP (DT The) (JJ quick) (JJ brown) (NN fox))\n",
+        "namedNodes" => [%{"animal" => "(NN fox)\n"}]},
+      "1" => %{"match" => "(NP (DT the) (JJ lazy) (NN dog))\n",
+        "namedNodes" => [%{"animal" => "(NN dog)\n"}]}}]}}
+```
+
 ## Contributing
 
 All requests will be entertained, but the purpose of this package is to focus on providing services surrounding the 
