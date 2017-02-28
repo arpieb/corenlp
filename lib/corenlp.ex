@@ -239,7 +239,7 @@ defmodule CoreNLP do
 
   # Construct an endpoint URL for a request.
   defp get_endpoint(add_path \\ "") do
-    "http://" <> host() <> ":" <> Integer.to_string(port()) <> base_path() <> add_path
+    "http://" <> host() <> ":" <> Integer.to_string(port()) <> String.trim_trailing(base_path(), "/") <> "/" <> String.trim_leading(add_path, "/")
   end
 
   # Inspect item, return as a binary.  Used for debugging/logging.
