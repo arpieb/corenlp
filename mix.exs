@@ -52,7 +52,7 @@ defmodule CoreNLP.Mixfile do
   defp deps do
     [
       {:ex_doc, "~> 0.16.2", only: :dev},
-      {:httpoison, "~> 0.12.0"},
+      {:httpoison, "~> 0.11.0"},
       {:poison, "~> 3.1"},
     ]
   end
