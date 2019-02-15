@@ -15,7 +15,7 @@ by adding `corenlp` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:corenlp, "~> 0.1.0"}]
+  [{:corenlp, "~> 0.1.2"}]
 end
 ```
 
